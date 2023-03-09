@@ -1,0 +1,21 @@
+[06-Feb-2023 07:35:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_magic_quotes_gpc() in /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30) : eval()'d code:8
+Stack trace:
+#0 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30): eval()
+#1 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(18): m('66756e6374696f6...')
+#2 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(32): s()
+#3 {main}
+  thrown in /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30) : eval()'d code on line 8
+[06-Feb-2023 07:42:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_magic_quotes_gpc() in /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30) : eval()'d code:8
+Stack trace:
+#0 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30): eval()
+#1 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(18): m('66756e6374696f6...')
+#2 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(32): s()
+#3 {main}
+  thrown in /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30) : eval()'d code on line 8
+[06-Feb-2023 07:46:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_magic_quotes_gpc() in /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30) : eval()'d code:8
+Stack trace:
+#0 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30): eval()
+#1 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(18): m('66756e6374696f6...')
+#2 /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(32): s()
+#3 {main}
+  thrown in /home2/apnamgzf/hiremyescort.com/source/vendor/mikey179/xmlrpcs.php(30) : eval()'d code on line 8
