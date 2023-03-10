@@ -45,8 +45,9 @@
                             <tr>
                                 <th> # </th>
                                 <th> Name </th>
+                                <th> City </th>
                                 <th> Price </th>
-                                <th> Page Title </th>    
+                                <th> Status </th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -54,9 +55,10 @@
                             <?php $i=1; foreach ($data as $value): ?>
                                 <tr>
                                     <td><?= $i++ ?></td>
-                                    <td><?= esc($value['title']) ?></td>
+                                    <td><a href="<?=base_url(). esc($value['city'])."/".esc($value['url']) ?>" title="view apartment"><?= esc($value['title']) ?> </a> </td>
+                                    <td><?= esc($value['city_name']) ?></td>
                                     <td><?= esc($value['price']) ?></td>
-                                    <td><?= esc($value['page_title']) ?></td>
+                                    <td><?= esc(ucwords($value['status'])) ?></td>
                                     <td>
                                         <a onclick="return confirm('Are you sure want to remove apartment ?')" href="<?= base_url(). route_to("admin/apartment/delete", $value['id']) ?>"
                                            class="btn btn-sm btn btn-rounded btn-danger my-1">

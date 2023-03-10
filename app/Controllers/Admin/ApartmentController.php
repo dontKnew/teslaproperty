@@ -17,6 +17,8 @@ class ApartmentController extends BaseController
         }
         $ApartmentModel = new ApartmentModel();
         $BookingForm = $ApartmentModel->orderBy("id", "DESC")
+            ->select("apartment.*, city.url as city, city.name as city_name")
+            ->join("city", "city.id = apartment.city", "left")
             ->paginate($result_number);
         $pager['pagination'] = $ApartmentModel->pager->getDetails();
         $pager['pagination']['path'] = $ApartmentModel->pager->getPageURI();
@@ -41,11 +43,13 @@ class ApartmentController extends BaseController
                 $data = $this->request->getVar();
                 $data['url'] = url_title($data['title'], '-', true);
                 $data['specification'] = json_encode($data['specification']);
+                $data['more_information'] = json_encode($data['more_information']);
+                $data['property_summary'] = json_encode($data['property_summary']);
+                $data['nearby_place'] = json_encode($data['nearby_place']);
                 $data['gallery'] = $this->uploadFileMultiple("gallery", "backend/img/apartment/image/");
                 $data['video'] = $this->uploadFile("video", "backend/img/apartment/video/");
-
-
                 $ApartmentModel = new ApartmentModel();
+
                 $ApartmentModel->save($data);
                 $session->setFlashdata("msg","Apartment add successfully");
                 return redirect()->route("admin/apartment");
@@ -67,19 +71,36 @@ class ApartmentController extends BaseController
                 try {
                     $data = $this->request->getVar();
                     $data['id'] = $id;
+                    $data['url'] = url_title($data['title'], '-', true);
+                    $data['specification'] = json_encode($data['specification']);
+                    $data['more_information'] = json_encode($data['more_information']);
+                    $data['property_summary'] = json_encode($data['property_summary']);
+                    $data['nearby_place'] = json_encode($data['nearby_place']);
+                    $data['video'] = $this->uploadFile("video", "backend/img/apartment/video/", $ApartmentModelData['video']);
 
+                    if(isset($data['old_gallery'])){
+                        $data['gallery'] = $this->uploadFileMultiple("gallery", "backend/img/apartment/image/", $data['old_gallery']);
+                    }else {
+                        $data['gallery'] = $this->uploadFileMultiple("gallery", "backend/img/apartment/image/");
+                    }
+
+                    unset($data['old_gallery']);
                     $ApartmentModel->save($data);
                     $session->setFlashdata("msg","Apartment updated successfully");
                     return redirect()->route("admin/apartment");
                 }catch (\Exception $e){
+
                     $session->setFlashdata("err","Error : ".$e->getMessage());
                     return redirect()->back();
                 }
                 return redirect()->route("admin/apartment");
             }else {
+
+                $city_list = (new CityModel)->orderBy("name", "asc")->findAll();
                 $data = array(
                     "apartment"=>"active",
-                    "data"=>$ApartmentModelData
+                    "data"=>$ApartmentModelData,
+                    "city_list"=>$city_list,
                 );
                 return view("admin/apartment/edit", $data);
             }
@@ -111,14 +132,20 @@ class ApartmentController extends BaseController
         }
     }
 
-    private function uploadFileMultiple(string $input_name, $path, $old_image_name=null)
+    private function uploadFileMultiple(string $input_name, $path, array $old_image_name=[])
     {
+
         $files = $this->request->getFiles();
         $file_names = [];
-        foreach ($files[$input_name] as $file) {
-            $name = $file->getRandomName();
-            array_push($file_names, $name);
-            $file->move($path, $name);
+        if($files[$input_name][0]->getName() !== "")  {
+            foreach ($files[$input_name] as $file) {
+                $name = $file->getRandomName();
+                array_push($file_names, $name);
+                $file->move($path, $name);
+            }
+            $file_names = array_merge($file_names, $old_image_name);
+        }else {
+            $file_names = $old_image_name;
         }
         return json_encode($file_names, JSON_UNESCAPED_SLASHES);
     }
